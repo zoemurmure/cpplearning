@@ -10,6 +10,6 @@ istream &read(istream &is, Person &p) {
 }
 
 ostream &print(ostream &os, const Person &p) {
-    os << p.name << " " << p.address;
+    os << p.getName() << " " << p.getAddr();
     return os;
 }
