@@ -2,15 +2,18 @@
 #define ACCOUNT_H
 #include <string>
 
-typedef double Money;
-std::string bal;
-
 class Account {
 public:
-    Money balance() { return bal; }
+    void calculate() { amount += amount * interestRate; }
+    static double rate() { return interestRate; }
+    static void rate(double r) { interestRate = r; }
 private:
-    typedef double Money;   // error, compiler accepts it
-    Money bal = 30.2;;
+    std::string owner;
+    double amount;
+    static constexpr int period = 30;
+    double daily_tbl[period];
+    static double interestRate;
+    static double initRate() { return 0.25; }
 };
 
 
