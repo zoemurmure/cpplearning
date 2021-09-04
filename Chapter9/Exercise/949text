@@ -1,0 +1,3 @@
+As shown in Table 9.15, there are six versions of compare. The arguments vary
+based on whether we are comparing two strings or a string and a character
+array. In both cases, we might compare the entire string or a portion thereof.
