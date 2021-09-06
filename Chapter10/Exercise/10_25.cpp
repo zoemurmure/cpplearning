@@ -4,6 +4,7 @@
 #include <numeric>
 #include <string>
 #include <fstream>
+#include <functional>
 using namespace std;
 
 bool isShorter(const string &s1, const string &s2) {
@@ -37,19 +38,23 @@ string make_plural(int n, const string &s, const string &t) {
     }
 }
 
+bool check_size(const string &s, string::size_type sz) {
+    return s.size() >= sz;
+}
+
 void biggies(vector<string> &words, 
             vector<string>::size_type sz) {
     elimDups(words);
     stable_sort(words.begin(), words.end(), 
         [](const string &a, const string &b)
         { return a.size() < b.size(); });
-    auto wc = find_if(words.begin(), words.end(), 
-        [sz](const string &a) { return a.size() >= sz; });
-    auto count = words.end() - wc;
+    auto wc = stable_partition(words.begin(), words.end(), 
+        bind(check_size, placeholders::_1, sz));
+    auto count = wc - words.begin();
     cout << count << " " << make_plural(count, "word", "s")
          << " of length " << sz << " or longer" << endl;
 
-    for_each(wc, words.end(), 
+    for_each(words.begin(), wc, 
         [](const string &s) { cout << s << " "; });
     cout << endl;
 }

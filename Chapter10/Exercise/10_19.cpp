@@ -43,13 +43,13 @@ void biggies(vector<string> &words,
     stable_sort(words.begin(), words.end(), 
         [](const string &a, const string &b)
         { return a.size() < b.size(); });
-    auto wc = find_if(words.begin(), words.end(), 
+    auto wc = stable_partition(words.begin(), words.end(), 
         [sz](const string &a) { return a.size() >= sz; });
-    auto count = words.end() - wc;
+    auto count = wc - words.begin();
     cout << count << " " << make_plural(count, "word", "s")
          << " of length " << sz << " or longer" << endl;
 
-    for_each(wc, words.end(), 
+    for_each(words.begin(), wc, 
         [](const string &s) { cout << s << " "; });
     cout << endl;
 }
