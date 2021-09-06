@@ -14,7 +14,7 @@ int main() {
 
     vector<int> vec(in_iter, eof);
     sort(vec.begin(), vec.end());
-    copy(vec.cbegin(), vec.cend(), out_iter);
+    unique_copy(vec.cbegin(), vec.cend(), out_iter);
 
     return 0;
 }
