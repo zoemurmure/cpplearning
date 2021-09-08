@@ -2,6 +2,17 @@
 
 headers: `algorithm`, `numeric`
 
+Parameter Patterns:
+
+```c++
+alg(beg, end, other args);
+alg(beg, end, dest, other args);
+alg(beg, end, beg2, other args);
+alg(beg, end, beg2, end2, other args);
+```
+
+
+
 ```c++
 find(b, e, val);  // return an iterator
 count(b, e, val);
@@ -13,6 +24,7 @@ sort(b, e, predicate); // binary predicate
 stable_sort(b, e);
 stable_sort(b, e, predicate);  // binary predicate
 unique(b, e); // return an iterator that denotes the end of the range of the unique values
+unique(b, e, predicate); // binary predicate
 partition(b, e, predicate);  // unary predicate
 stable_partition(b, e, predicate); // unary predicate
 find_if(b, e, predicate);  // unary predicate
@@ -35,5 +47,28 @@ header: `iterator`
 
 ```c++
 auto it = back_inserter(vec);
+```
+
+---
+
+## List-specific algorithm
+
+```c++
+lst.merge(lst2);
+lst.merge(lst2, comp);
+
+lst.remove(val);
+lst.remove_if(pred);
+
+lst.sort();
+lst.sort(comp);
+
+lst.unique();
+lst.unique(pred);
+
+lst.splice(p, lst2);
+lst.splice(p, lst2, p2);
+lst.splice(p, lst2, b, e);
+flst.splice(args)
 ```
 
