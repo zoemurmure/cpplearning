@@ -21,3 +21,30 @@
 `unordered_multimap`: Hashed `map`; keys can appear multiple times
 
 `unordered_multiset`: Hashed `set`; keys can appear multiple times
+
+## 2. Key Types
+
+Using a comparison function for the key type
+
+```c++
+multiset<Sales_data, decltype(compareIsbn)*> bookstore(compareIsbn);
+```
+
+## 3. `pair` Type
+
+header: `utility`
+
+```c++
+pair<T1, T2> p;
+pair<T1, T2> p(v1, v2);
+pair<T1, T2> p = {v1, v2};
+
+make_pair(v1, v2);
+
+p.first;
+p.second;
+p1 relop p2;  // > >= < <=
+p1 == p2;
+
+```
+
