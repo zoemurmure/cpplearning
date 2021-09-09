@@ -91,6 +91,8 @@ c.at(k); // Checked access to the element with key k; throw an out_of_range exce
 
 **ATTENTION: unordered container can use `equal_range`**
 
+**Because: Elements with the same key are stored adjacent to one another in both the ordered and unordered containers.**
+
 ```c++
 c.find(k);		// Returns an iterator to the first element with key k, or the off-the-end iterator
 c.count(k);		// Returns the number of elements with key k.
