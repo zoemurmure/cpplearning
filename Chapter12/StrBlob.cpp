@@ -1,13 +1,12 @@
 #include "StrBlob.h"
-using namespace std;
 
-StrBlob::StrBlob(): data(make_shared<vector<string>>()) { }
-StrBlob::StrBlob(initializer_list<string> il):
-    data(make_shared<vector<string>>(il)) { }
+StrBlob::StrBlob(): data(std::make_shared<std::vector<std::string>>()) { }
+StrBlob::StrBlob(std::initializer_list<std::string> il):
+    data(std::make_shared<std::vector<std::string>>(il)) { }
 
-void StrBlob::check(size_type i, const string &msg) const {
+void StrBlob::check(size_type i, const std::string &msg) const {
     if (i >= data->size()) {
-        throw out_of_range(msg);
+        throw std::out_of_range(msg);
     }
 }
 
@@ -16,36 +15,76 @@ void StrBlob::pop_back() {
     data->pop_back();
 }
 
- string& StrBlob::front() {
+ std::string& StrBlob::front() {
     check(0, "front on empty StrBlob");
     return data->front();
 }
 
- string& StrBlob::back()  {
+ std::string& StrBlob::back()  {
     check(0, "back on empty StrBlob");
     return data->back();
 }
 
-const string& StrBlob::front() const{
+const std::string& StrBlob::front() const{
     check(0, "front on empty StrBlob");
     return data->front();
 }
 
-const string& StrBlob::back() const {
+const std::string& StrBlob::back() const {
     check(0, "back on empty StrBlob");
     return data->back();
 }
 
-int main() {
-    StrBlob sb1;
-    StrBlob sb2({"one", "two", "three"});
-    string s1 = sb2.front();
-    const string s2 = sb2.back();
-    cout << s1 << " " << s2 << endl;
-    cout << sb2.size() << endl;
+StrBlobPtr StrBlob::begin() {
+    return StrBlobPtr(*this);
+}
 
-    const StrBlob sb3 = {"1", "2", "3"};
-    string s3 = sb3.front();
-    cout << s3 << endl;
-    return 0;
+StrBlobPtr StrBlob::end() {
+    return StrBlobPtr(*this, data->size());
+}
+
+std::shared_ptr<std::vector<std::string>>
+StrBlobPtr::check(std::size_t i, const std::string &msg) const {
+    auto ret = wptr.lock();
+    if (!ret) {
+        throw std::runtime_error("unbound StrBlobPtr");
+    }
+    if (i >= ret->size()) {
+        throw std::out_of_range(msg);
+    }
+    return ret;
+}
+
+std::string& StrBlobPtr::deref() const {
+    auto p = check(curr, "deference past end");
+    return (*p)[curr];
+}
+
+StrBlobPtr& StrBlobPtr::incr() {
+    check(curr, "increment past end of StrBlobPtr");
+    ++curr;
+    return *this;
+}
+
+std::shared_ptr<std::vector<std::string>>
+ConstStrBlobPtr::check(std::size_t i, const std::string &msg) const {
+    auto ret = wptr.lock();
+    if (!ret) {
+        throw std::runtime_error("unbound ConstStrBlobPtr");
+    }
+    if (i >= ret->size()) {
+        throw std::out_of_range(msg);
+    }
+    return ret;
+}
+
+const std::string& ConstStrBlobPtr::deref() const {
+    auto p = check(curr, "deference past end");
+    return (*p)[curr];
+}
+
+ConstStrBlobPtr& ConstStrBlobPtr::incr() {
+    check(curr, "increment past end of ConstStrBlobPtr");
+    ++curr;
+    return *this;
 }

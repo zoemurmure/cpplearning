@@ -3,9 +3,14 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <iostream>
+
+class StrBlob;
+class StrBlobPtr;
+class ConstStrBlobPtr;
 
 class StrBlob {
+    friend class StrBlobPtr;
+    friend class ConstStrBlobPtr;
 public:
     typedef std::vector<std::string>::size_type size_type;
     StrBlob();
@@ -20,9 +25,40 @@ public:
     std::string& back();
     const std::string& front() const;
     const std::string& back() const;
+    StrBlobPtr begin();
+    StrBlobPtr end();
 private:
     std::shared_ptr<std::vector<std::string>> data;
     void check(size_type i, const std::string &msg) const;
 };
+
+class StrBlobPtr {
+public:
+    StrBlobPtr(): curr(0) { }
+    StrBlobPtr(StrBlob &a, size_t sz = 0):
+        wptr(a.data), curr(sz) { }
+    std::string& deref() const;
+    StrBlobPtr& incr();
+private:
+    std::shared_ptr<std::vector<std::string>>
+        check(std::size_t, const std::string&) const;
+    std::weak_ptr<std::vector<std::string>> wptr;
+    std::size_t curr;
+};
+
+class ConstStrBlobPtr {
+public:
+    ConstStrBlobPtr(): curr(0) { }
+    ConstStrBlobPtr(const StrBlob &a, size_t sz = 0):
+        wptr(a.data), curr(sz) { }
+    const std::string& deref() const;
+    ConstStrBlobPtr& incr();
+private:
+    std::shared_ptr<std::vector<std::string>>
+        check(std::size_t, const std::string&) const;
+    std::weak_ptr<std::vector<std::string>> wptr;
+    std::size_t curr;
+};
+
 
 #endif
