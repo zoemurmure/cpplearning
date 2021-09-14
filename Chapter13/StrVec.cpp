@@ -3,9 +3,16 @@
 #include <utility>
 using namespace std;
 
+allocator<string> StrVec::alloc;
+
 void StrVec::push_back(const string &s) {
     chk_n_alloc();
     alloc.construct(first_free++, s);
+}
+
+void StrVec::pop_back() {
+    if (size() > 0)
+        alloc.destroy(first_free--);
 }
 
 pair<string*, string*> 
@@ -15,10 +22,14 @@ StrVec::alloc_n_copy(const string *b, const string *e) {
 }
 
 void StrVec::free() {
-    if (elements) {
-        for (auto p = first_free; p != elements; )
-            alloc.destroy(--p);
-        alloc.deallocate(elements, cap - elements);
+    //if (elements) {
+    //    for (auto p = first_free; p != elements; )
+    //        alloc.destroy(--p);
+    //    alloc.deallocate(elements, cap - elements);
+    //}
+    if (element) {
+        for_each(begin(), end(), [](string &p) { alloc.destroy(&p); });
+        alloca.deallocate(elements, cap - elements);
     }
 }
 
@@ -52,4 +63,25 @@ void StrVec::reallocate() {
     elements = newdata;
     first_free = dest;
     cap = elements + newcapacity;
+}
+
+void StrVec::reserve(size_t n) {
+    while (capacity() < n) {
+        reallocate();
+    }
+}
+
+void StrVec::resize(size_t n, const string &s) {
+    while (n > size()) {
+        push_back(s);
+    }
+    while (n < size()) {
+        pop_back();
+    }
+}
+
+StrVec::StrVec(initializer_list<string>& il): StrVec() {
+    for (const auto &s : il) {
+        push_back(s);
+    }
 }

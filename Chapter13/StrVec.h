@@ -2,19 +2,24 @@
 #define STRVEC_H
 #include <string>
 #include <memory>
+#include <initializer_list>
 
 class StrVec {
 public:
     StrVec(): elements(nullptr), first_free(nullptr), cap(nullptr) { }
     StrVec(const StrVec&);
+    StrVec(std::initializer_list<std::string>&);
     StrVec& operator= (const StrVec&);
     ~StrVec();
 
     void push_back(const std::string&);
+    void pop_back();
     size_t size() const { return first_free - elements; }
     size_t capacity() const { return cap - elements; }
     std::string *begin() const { return elements; }
     std::string *end() const { return first_free; }
+    void reserve(size_t);
+    void resize(size_t n, const std::string &t = std::string());
 
 private:
     static std::allocator<std::string> alloc;
