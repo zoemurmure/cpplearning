@@ -98,5 +98,14 @@ The destructor should not be a deleted member
    - a reference member that does not have an in-class initializer
    - a `const` member whose type does not explicitly define a default constructor and doesn't have an in-class initializer
 
-### 6.2 `private` copy control
+## 7. `swap`
 
+`friend` declaration
+
+`using std::swap`, then use `swap`
+
+## 8. move constructor
+
+`move` function in header `utility`
+
+use `std::move` directly
