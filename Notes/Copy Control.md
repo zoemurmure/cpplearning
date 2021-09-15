@@ -97,6 +97,12 @@ The destructor should not be a deleted member
    - a member with a deleted or inaccessible **destructor**
    - a reference member that does not have an in-class initializer
    - a `const` member whose type does not explicitly define a default constructor and doesn't have an in-class initializer
+5. Synthesized deleted move operation:
+   - a member defines its own copy constructor but does not also define a move constructor
+   - a member doesn't define its own copy operations and for which the compiler is unable to synthesize a move constructor
+   - a member whose own move constructor or move-assignment operator is deleted or inaccessible
+   - **move constructor**: the destructor is deleted or inaccessible
+   - **move-assignment operator**: has a `const` or reference membet
 
 ## 7. `swap`
 
@@ -104,8 +110,18 @@ The destructor should not be a deleted member
 
 `using std::swap`, then use `swap`
 
-## 8. move constructor
+## 8. moving objects
+
+### 8.1 rvalue reference
+
+1. return lvalue:
+
+   Functions that return lvalue reference, assignment, subscript, dereference, prefix increment/decrement operators, examples of expressions
+
+2. return rvalue:
+
+   Functions that return a nonreference type, arithmetic, relational, bitwise, postfix increment/decrement operators
+
+using `std::move` to obtain an rvalue reference bound to an lvalue.
 
 `move` function in header `utility`
-
-use `std::move` directly
