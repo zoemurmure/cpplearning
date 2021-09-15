@@ -12,6 +12,7 @@ public:
     HasPtr& operator= (HasPtr);
     bool operator< (const HasPtr&);
     ~HasPtr() { delete ps; }
+    HasPtr(HasPtr &&p) noexcept : ps(p.ps), i (p.i) { p.ps = nullptr; }
 private:
     std::string *ps;
     int i;
