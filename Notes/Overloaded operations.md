@@ -1,0 +1,97 @@
+# 1. Basic concept
+
+## 1.1 Operators that maybe overloaded
+
+```
++ 		- 		* 		/ 		% 		^
+& 		| 		~ 		! 		, 		=
+< 		> 		<= 		>= 		++ 		--
+<<	 	>> 		== 		!= 		&& 		||
++= 		-= 		/= 		%= 		^= 		&=
+|= 		*= 		<<= 	>>= 	[] 		()
+-> 		->* 	new 	new [] 	delete 	delete []
+```
+
+## 1.2 Operators that cannot be overloaded
+
+```
+::		.*		.		?:
+```
+
+## 1.3 usage
+
+```c++
+data1 + data2;
+operator+(data1, data2);
+
+data1 += data2;
+data1.operator+=(data2);
+```
+
+## 1.4 member or nonmember implementation
+
+1. assignment(`=`), subscript(`[]`), call(`()`), and member access arrow(`->`) operator must be defined as members.
+2. compound-assignment operators ordinarily ought to be members.
+3. operators that change the state of their object or that are closely tied to their given type--such as increment, decrement, and dereference--usually should be members.
+4. symmetric operators--those that might convert either operand, such as the arithmetic, equality, relational, and bitwise operators--usually should be defined as ordinary nonmember functions.
+5. IO operators must be nonmember functions
+
+## 1.5 return type
+
+1. logical and relational operators should return `bool`
+2. arithmetic operators should return a value of the class type
+3. assignment and compound assignment should return a reference to the left-hand operand.
+
+# 2. Input and Output Operators
+
+**should be ordinary nonmember functions, ans usually must ve declared as friends.**
+
+## 2.1 output operator<<
+
+parameter 1: reference to a nonconst ostream object
+
+parameter 2: reference to const of the class type
+
+return: the ostream parameter
+
+```c++
+ostream &operator<<(ostream &os, const class_type &item) {
+    ...;
+    return os;
+}
+```
+
+## 2.2 input operator>>
+
+parameter 1: reference to the stream from which it is to read
+
+parameter 2: reference to the nonconst object into which to read
+
+return: reference to the given stream
+
+```c++
+istream &operator>>(istream &is, class_type &item) {
+    is >> item.data;
+    if (is) ...;
+    else item = class_type();
+    return is;
+}
+```
+
+Input operators must deal with the possibility that the input might fail.
+
+Check once after reading all the data and before using those data.
+
+
+
+Some input operators need to do additional data verification.
+
+Usually and input operator should set only the `failbit`.
+
+## 2.3 arithmetic and relational operators
+
+parameters: references to `const`
+
+return: a copy of the local as its result
+
+define the arithmetic operator to use compound assignment

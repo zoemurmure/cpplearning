@@ -15,5 +15,8 @@ int main() {
     vh.push_back(hp2);
     vh.push_back(hp3);
     sort(vh.begin(), vh.end());
+
+    hp1 = hp2;
+    hp2 = move(hp3);
     return 0;
 }

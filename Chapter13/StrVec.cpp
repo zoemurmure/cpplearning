@@ -10,6 +10,11 @@ void StrVec::push_back(const string &s) {
     alloc.construct(first_free++, s);
 }
 
+void StrVec::push_back(string &&s) {
+    chk_n_alloc();
+    alloc.construct(first_free++, std::move(s));
+}
+
 void StrVec::pop_back() {
     if (size() > 0)
         alloc.destroy(first_free--);
@@ -53,15 +58,19 @@ StrVec& StrVec::operator= (const StrVec &rhs) {
 
 void StrVec::reallocate() {
     auto newcapacity = size() ? 2 * size() : 1;
-    auto newdata = alloc.allocate(newcapacity);
+    auto first = alloc.allocate(newcapacity);
+    /*
     auto dest = newdata;
     auto elem = elements;
     for (size_t i = 0; i != size(); ++i) {
         alloc.construct(dest++, std::move(*elem++));
     }
+    */
+    auto last = uninitialized_copy(make_move_iterator(begin()),
+                make_move_iterator(end()), first);
     free();
-    elements = newdata;
-    first_free = dest;
+    elements = first;
+    first_free = last;
     cap = elements + newcapacity;
 }
 

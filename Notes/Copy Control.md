@@ -125,3 +125,15 @@ The destructor should not be a deleted member
 using `std::move` to obtain an rvalue reference bound to an lvalue.
 
 `move` function in header `utility`
+
+### 8.2 move iterator
+
+move iterator adapts its given iterator by changing the behavior of the iterator's deference operator.
+
+the dereference operator of a move iterator yields an rvalue reference
+
+`make_move_iterator(begin())`
+
+### 8.3 rvalue and lvalue reference member functions
+
+`Foo &oerator=(const Foo&) const &;`

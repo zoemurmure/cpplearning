@@ -6,11 +6,11 @@ using namespace std;
 
 allocator<char> String::alloc;
 
-void print(const String &s) {
-    for (auto i = s.elements; i != s.first_free; ++i) {
-        cout << *i;
+ostream &operator<<(ostream &os, const String &s) {
+    for (auto i = s.begin(); i != s.end(); ++i) {
+        os << *i;
     }
-    cout << endl;
+    return os;
 }
 
 String::String(const String &s) {

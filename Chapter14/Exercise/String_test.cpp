@@ -8,6 +8,7 @@ int main() {
     String s2("second");
     vs.push_back(s1);
     vs.push_back(s2);
+    cout << s1;
     //s1+s2;
     //print(s1);
     return 0;

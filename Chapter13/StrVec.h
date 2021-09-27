@@ -15,6 +15,7 @@ public:
     StrVec& operator= (StrVec&&) noexcept;
 
     void push_back(const std::string&);
+    void push_back(std::string&&);
     void pop_back();
     size_t size() const { return first_free - elements; }
     size_t capacity() const { return cap - elements; }

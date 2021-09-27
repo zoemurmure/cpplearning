@@ -13,6 +13,8 @@ public:
         contents(std) { }
     Message(const Message&);
     Message& operator= (const Message&);
+    Message(Message&&);
+    Message& operator=(Message&&);
     ~Message();
     void save(Folder&);
     void remove(Folder&);
@@ -23,6 +25,8 @@ private:
     std::set<Folder*> folders;
     void add_to_Folders(const Message&);
     void remove_from_Folders();
+    void move_Folders(Message*);
+
 };
 
 void swap(Message&, Message&);

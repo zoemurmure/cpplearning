@@ -1,8 +1,9 @@
 #ifndef STRING_H
 #define STRING_H
 #include <memory>
+#include <iostream>
 class String {
-friend void print(const String&);
+friend std::ostream &operator<<(std::ostream&, const String&);
 public:
     String(): elements(nullptr), first_free(nullptr), cap(nullptr) { }
     String(const String&);
@@ -32,6 +33,6 @@ private:
     char *cap;
 };
 
-void print(const String&);
+std::ostream &operator<<(std::ostream&, const String&);
 
 #endif

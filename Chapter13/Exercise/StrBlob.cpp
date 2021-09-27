@@ -97,3 +97,4 @@ ConstStrBlobPtr& ConstStrBlobPtr::incr() {
     ++curr;
     return *this;
 }
+

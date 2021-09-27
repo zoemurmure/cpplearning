@@ -9,7 +9,8 @@ public:
     HasPtr(const HasPtr &hp):
         ps(new std::string(*(hp.ps))), i(hp.i) { }
     //HasPtr& operator= (const HasPtr&);
-    HasPtr& operator= (HasPtr);
+    HasPtr& operator= (HasPtr&);
+    HasPtr& operator= (HasPtr&&);
     bool operator< (const HasPtr&);
     ~HasPtr() { delete ps; }
     HasPtr(HasPtr &&p) noexcept : ps(p.ps), i (p.i) { p.ps = nullptr; }
@@ -37,13 +38,24 @@ inline void swap(HasPtr &lhs, HasPtr &rhs) {
 //
 //}
 
-HasPtr& HasPtr::operator= (HasPtr rhs) {
+HasPtr& HasPtr::operator= (HasPtr& rhs) {
+    std::cout << "In copy assignment" << std::endl;
     swap(*this, rhs);
     return *this;
 }
 
 bool HasPtr::operator< (const HasPtr &rhs) {
     return *(this->ps) < *(rhs.ps);
+}
+
+HasPtr& HasPtr::operator= (HasPtr &&rhs) {
+    std::cout << "In move assignment" << std::endl;
+    if (this != &rhs) {
+        ps = rhs.ps;
+        i = rhs.i;
+        rhs.ps = nullptr;
+    }
+    return *this;
 }
 
 
