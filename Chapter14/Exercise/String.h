@@ -4,6 +4,8 @@
 #include <iostream>
 class String {
 friend std::ostream &operator<<(std::ostream&, const String&);
+friend bool operator==(const String&, const String&);
+friend bool operator!=(const String&, const String&);
 public:
     String(): elements(nullptr), first_free(nullptr), cap(nullptr) { }
     String(const String&);
@@ -34,5 +36,6 @@ private:
 };
 
 std::ostream &operator<<(std::ostream&, const String&);
-
+bool operator==(const String&, const String&);
+bool operator!=(const String&, const String&);
 #endif

@@ -8,6 +8,8 @@ class Sales_data {
     friend Sales_data operator+(const Sales_data&, const Sales_data&);
     friend std::istream& operator>>(std::istream&, Sales_data&);
     friend std::ostream& operator<<(std::ostream&, const Sales_data&);
+    friend bool operator==(const Sales_data&, const Sales_data&);
+    friend bool operator!=(const Sales_data&, const Sales_data&);
 public:
     // constructors
     //Sales_data() = default;
@@ -44,4 +46,6 @@ private:
 Sales_data operator+(const Sales_data&, const Sales_data&);
 std::ostream& operator>>(std::ostream&, const Sales_data&);
 std::istream& operator<<(std::istream&, Sales_data&);
+bool operator==(const Sales_data&, const Sales_data&);
+bool operator!=(const Sales_data&, const Sales_data&);
 #endif

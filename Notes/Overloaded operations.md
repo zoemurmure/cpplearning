@@ -95,3 +95,31 @@ parameters: references to `const`
 return: a copy of the local as its result
 
 define the arithmetic operator to use compound assignment
+
+## 2.4 Equality Operators
+
+parameters: reference to const
+
+return: bool
+
+One of the equality or inequality operators should delegate the work to the other.
+
+## 2.5 Relational Operators
+
+if two object are !=, then one object should be < the other
+
+## 2.6 Assignment Operators
+
+return: a reference to its left-hand operand.
+
+Must be defined as member function
+
+Have to free the existing elements and create new ones.
+
+### 2.6.1 compound-assignment operators
+
+return: a reference to its left-hand operand.
+
+not required to be members, ought to be member
+
+define all assignment, including compound assignments in the class.

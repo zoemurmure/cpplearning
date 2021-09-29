@@ -2,9 +2,19 @@
 #include <iostream>
 #include <utility>
 #include <cstring>
+#include <algorithm>
 using namespace std;
 
 allocator<char> String::alloc;
+
+bool operator==(const String &lhs, const String &rhs) {
+    return lhs.size() == rhs.size() &&
+           equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+
+bool operator!=(const String &lhs, const String &rhs) {
+    return !(lhs == rhs);
+}
 
 ostream &operator<<(ostream &os, const String &s) {
     for (auto i = s.begin(); i != s.end(); ++i) {
