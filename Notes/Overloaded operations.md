@@ -123,3 +123,61 @@ return: a reference to its left-hand operand.
 not required to be members, ought to be member
 
 define all assignment, including compound assignments in the class.
+
+## 2.7 Subscript operator
+
+return: a reference to the element that is fetched
+
+must be a member function
+
+define both `const` and non`const` versions
+
+## 2.8 Increment and decrement operators
+
+prefix operators should return a reference to the incremented or decremented object
+
+postfix operators should return the old value as a value, not a reference
+
+should be member function
+
+define both the prefix and postfix versions
+
+postfix operators should call its own prefix version to do the actual work and check.
+
+```c++
+// prefix 
+StrBlobPtr& operator++();
+// postfix
+StrBlobPtr operator++(int);
+```
+
+## 2.9 Member access operators
+
+dereference(*) and arrow(->) operators are often used in classes that represent iterators and in smart pointers classes.
+
+overloaded arrow operator must return either a pointer to a class type or an object of a class type that defines its own operator arrow.
+
+-> must be a member, * usually should be a member
+
+```c++
+    std::string& operator*() const {
+        auto p = check(curr, "dereference past end");
+        return (*p)[curr];
+    }
+    std::string* operator->() const {
+        return & this->operator*();
+    }
+```
+
+## 2.10 Function-Call operator
+
+must be a member
+
+```c++
+struct absInt {
+    int operator()(int val) const {
+        return val < 0 ? -val : val;
+    }
+};
+```
+

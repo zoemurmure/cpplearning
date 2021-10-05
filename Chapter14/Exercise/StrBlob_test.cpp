@@ -25,13 +25,18 @@ int main() {
     sb2.push_back("test");
 
     StrBlobPtr iter = sb1.begin();
-    for (size_t i = 0; i < sb1.size(); ++i, iter.incr()) {
-        cout << iter.deref() << endl;
+    for (size_t i = 0; i < sb1.size(); ++i, iter++) {
+        cout << *iter << endl;
     }
 
     iter = sb2.begin();
-    for (size_t i = 0; i < sb2.size(); ++i, iter.incr()) {
-        cout << iter.deref() << endl;
+    //for (size_t i = 0; i < sb2.size(); ++i, ++iter) {
+    //    cout << *iter << endl;
+    //}
+    StrBlobPtrPtr sbpp(iter);
+    StrBlobPtr *sbp = sbpp.operator->();
+    for (size_t i = 0; i < sb2.size(); ++i, ++*sbp) {
+        cout << **sbp << endl;
     }
     return 0;
 }

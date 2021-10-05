@@ -117,3 +117,51 @@ bool operator==(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
 bool operator!=(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
     return !(lhs == rhs);
 }
+
+StrBlobPtr& StrBlobPtr::operator++() {
+    check(curr, "increment past end of StrBlobPtr");
+    ++curr;
+    return *this;
+}
+
+StrBlobPtr& StrBlobPtr::operator--() {
+    --curr;
+    check(curr, "decrement past begin of StrBlobPtr");
+    return *this;
+}
+
+StrBlobPtr StrBlobPtr::operator++(int) {
+    StrBlobPtr ret = *this;
+    ++*this;
+    return ret;
+}
+
+StrBlobPtr StrBlobPtr::operator--(int) {
+    StrBlobPtr ret = *this;
+    --*this;
+    return ret;
+}
+
+StrBlobPtr& StrBlobPtr::operator+=(int n) {
+    while (n-- > 0) {
+        ++*this;
+    }
+    return *this;
+}
+
+StrBlobPtr& StrBlobPtr::operator-=(int n) {
+    while (n-- > 0) {
+        --*this;
+    }
+    return *this;
+}
+
+StrBlobPtr StrBlobPtr::operator+(int n) const {
+    StrBlobPtr ret  = *this;
+    return ret += n;
+}
+
+StrBlobPtr StrBlobPtr::operator-(int n) const {
+    StrBlobPtr ret = *this;
+    return ret -= n;
+}

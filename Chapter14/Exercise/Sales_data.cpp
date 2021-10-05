@@ -53,3 +53,8 @@ bool operator==(const Sales_data &lhs, const Sales_data &rhs) {
 bool operator!=(const Sales_data &lhs, const Sales_data &rhs) {
     return !(lhs == rhs);
 }
+
+Sales_data& Sales_data::operator=(const string &rhs) {
+    bookNo = s;
+    return *this;
+}

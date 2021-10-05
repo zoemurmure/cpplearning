@@ -14,6 +14,8 @@ public:
     String& operator+ (const String&);
     String(String&&) noexcept;
     String& operator= (String&&) noexcept;
+    char &operator[](std::size_t n) { return element[n]; }
+    const char &operator[](std::size_t n) const{ return elements[n]; }
     ~String();
 
     size_t size() const { return first_free - elements; }

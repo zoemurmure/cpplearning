@@ -7,6 +7,7 @@
 class StrBlob;
 class StrBlobPtr;
 class ConstStrBlobPtr;
+class StrBlobPtrPtr;
 
 class StrBlob {
     friend class StrBlobPtr;
@@ -19,6 +20,8 @@ public:
     StrBlob(std::initializer_list<std::string> il);
     StrBlob(const StrBlob&);
     StrBlob& operator= (const StrBlob&);
+    std::string &operator[](std::size_t n) { return (*data)[n]; }
+    const std::string &operator[](std::size_t n) const { return (*data)[n]; }
     size_type size() const { return data->size(); }
     bool empty() const { return data->empty(); }
 
@@ -49,6 +52,23 @@ public:
         wptr(a.data), curr(sz) { }
     std::string& deref() const;
     StrBlobPtr& incr();
+    std::string &operator[](std::size_t n) { return (*wptr.lock())[curr+n]; }
+    const std::string &operator[](std::size_t n) const { return (*wptr.lock())[curr+n]; }
+    StrBlobPtr& operator++();
+    StrBlobPtr& operator--();
+    StrBlobPtr operator++(int);
+    StrBlobPtr operator--(int);
+    StrBlobPtr& operator+=(int);
+    StrBlobPtr& operator-=(int);
+    StrBlobPtr operator+(int) const;
+    StrBlobPtr operator-(int) const;
+    std::string& operator*() const {
+        auto p = check(curr, "dereference past end");
+        return (*p)[curr];
+    }
+    std::string* operator->() const {
+        return & this->operator*();
+    }
 private:
     std::shared_ptr<std::vector<std::string>>
         check(std::size_t, const std::string&) const;
@@ -66,11 +86,29 @@ public:
         wptr(a.data), curr(sz) { }
     const std::string& deref() const;
     ConstStrBlobPtr& incr();
+    const std::string& operator*() const {
+        auto p = check(curr, "dereference past end");
+        return (*p)[curr];
+    }
+    const std::string* operator->() const {
+        return & this->operator*();
+    }
 private:
     std::shared_ptr<std::vector<std::string>>
         check(std::size_t, const std::string&) const;
     std::weak_ptr<std::vector<std::string>> wptr;
     std::size_t curr;
+};
+
+class StrBlobPtrPtr {
+public:
+    StrBlobPtrPtr(): ptr(nullptr) { }
+    StrBlobPtrPtr(StrBlobPtr &p): ptr(&p) { }
+    StrBlobPtr* operator->() const {
+        return ptr;
+    }
+private:
+    StrBlobPtr *ptr;
 };
 
 
