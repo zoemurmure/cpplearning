@@ -181,3 +181,14 @@ struct absInt {
 };
 ```
 
+### 2.10.1 Library-Defined Function Objects
+
+```
+plus<Type>  minus<Type>  multiplies<Type>  divides<Type>  modules<Type>  negate<Type>
+
+equal_to<Type>  not_equal_to<Type>  greater<Type>  greater_equal<Type>  less<Type>  less_equal<Type>
+
+logical_and<Type>  logical_or<Type>  logical_not<Type>
+```
+
+library function objects guarantees that they can work for pointers
