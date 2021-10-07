@@ -192,3 +192,45 @@ logical_and<Type>  logical_or<Type>  logical_not<Type>
 ```
 
 library function objects guarantees that they can work for pointers
+
+### 2.10.2 Callable objects and `function`
+
+Different callable objects have different type but can have the same call signature.
+
+`function` type in functional header
+
+```c++
+function<T> f;  // f is a null function object that can store callable objects with a call signature that is equivalent to the funciton type T (retType(args))
+function<T> f(nullptr);
+function<T> f(obj);  // store a copy of callable object obj in f
+f;	// Use f as a condition; true if f holds a callable object
+f(args);  // call the object in f passing args
+
+result_type;	// the type returned by this function type's callable object
+argument_type;  // type defined when T has exactly one or two arguments
+first_argument_type;
+second_argument_type;
+```
+
+# 3. Class-type conversions
+
+## 3.1 Conversion Operators
+
+must be member function
+
+no return type and parameters, usually should be const
+
+```c++
+operator type() const;
+```
+
+### 3.1.1 `explicit` conversion operators
+
+the compiler won't(generally) use an `explicit` conversion operator for implicit conversions.
+
+Exceptions:
+
+- The condition of an `if` , `while`, `do` statement
+- The condition expression in a `for` statement header
+- An operand to the logical NOT(!), OR(||), or AND(&&) operators
+- The condition expression in a conditional(?:) operator
