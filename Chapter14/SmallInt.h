@@ -2,6 +2,7 @@
 #define SMALLINT_H
 
 class SmallInt {
+    friend SmallInt operator+(const SmallInt&, const SmallInt&);
 public:
     SmallInt(int i = 0): val(i) {
         if (i < 0 || i > 255) {
@@ -12,6 +13,10 @@ public:
 private:
     std::size_t val;
 };
+
+SmallInt operator+(const SmallInt &a, const SmallInt &b) {
+    return static_cast<int>(a) + static_cast<int>(b);
+}
 
 
 
