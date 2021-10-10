@@ -1,6 +1,7 @@
 #ifndef QUOTE_H
 #define QUOTE_H
 #include <string>
+#include <iostream>
 class Quote {
 public:
     Quote() = default;
@@ -8,7 +9,11 @@ public:
             bookNo(book), price(sales_price) { }
     std::string isbn() const { return bookNo; }
     virtual double net_price(std::size_t n) const {
-        return n * sales_price;
+        return n * price;
+    }
+    virtual std::ostream &debug(std::ostream &os) const {
+        os << "Quote::bookNo " << bookNo << " Quote::price " << price;
+        return os;
     }
     virtual ~Quote() = default;
 private:
