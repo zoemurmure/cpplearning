@@ -14,6 +14,11 @@ double print_total(ostream &os, const Quote &item, size_t n) {
 int main() {
     Quote basic("1-1-1", 12.5);
     Bulk_quote bulk("1-1-1", 12.5, 10, 0.7);
+    Bulk_quote *bulkp = &bulk;
+    Quote *itemp = &bulk;
+    bulkp->discount_policy();
+    //itemp->discount_policy(); // error
+
     Limit_quote lq("1-1-1", 12.5, 10, 0.7);
     print_total(cout, basic, 20);
     print_total(cout, bulk, 20);  
@@ -21,6 +26,7 @@ int main() {
     basic.debug(cout) << endl;
     bulk.debug(cout) << endl;
     lq.debug(cout) << endl;
+    //Disc_quote test;
     //Quote item;
     //Bulk_quote bulk;
     //Quote *p = &item;
