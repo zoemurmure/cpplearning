@@ -39,6 +39,19 @@ int main() {
     //d.Base::memfcn();
 
     Base bobj; D1 d1obj; D2 d2obj;
+    Base *bp1 = &bobj, *bp2 = &d1obj, *bp3 = &d2obj;
+    cout << bp1->fcn() << endl;
+    cout << bp2->fcn() << endl;
+    cout << bp3->fcn() << endl;
     
+    D1 *d1p = &d1obj; D2 *d2p = &d2obj;
+    //bp2->f2(); //error: 'struct Base' has no member named 'f2'
+    d1p->f2();
+    d2p->f2();
+
+    Base *p1 = &d2obj; D1 *p2 = &d2obj; D2 *p3 = &d2obj;
+    //p1->fcn(42); // error
+    cout << p2->fcn(42) << endl;
+    cout << p3->fcn(42) << endl;
     return 0;
 }
