@@ -6,9 +6,10 @@
 class Bulk_quote : public Disc_quote {
 public:
     Bulk_quote() = default;
-    Bulk_quote(const std::string &book, double price,
-             std::size_t qty, double disc) :
-             Disc_quote(book, price, qty, disc) { }
+    //Bulk_quote(const std::string &book, double price,
+    //         std::size_t qty, double disc) :
+    //         Disc_quote(book, price, qty, disc) { }
+    using Disc_quote::Disc_quote;
     double net_price(std::size_t) const override;
     std::ostream &debug(std::ostream &os) const override {
         Quote::debug(os) << " Bulk_quote::quantity " << quantity

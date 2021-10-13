@@ -10,7 +10,7 @@
 
 `multimap`: `map` in which a key can appear multiple times
 
-`mulset`: `set` in which a key can appear multiple times
+`multiset`: `set` in which a key can appear multiple times
 
 ### 1.2 Unordered Collections
 

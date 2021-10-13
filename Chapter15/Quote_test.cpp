@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "Quote.h"
 #include "Bulk_quote.h"
 #include "Limit_quote.h"
@@ -32,9 +33,13 @@ int main() {
     //Quote *p = &item;
     //p = &bulk;
     //Quote &r = bulk;
-    Quote basic("1-1-1", 12.5);
-    Bulk_quote bulk("1-1-1", 12.5, 10, 0.7);
-    Quote b(bulk);
+    //Quote basic("1-1-1", 12.5);
+    //Bulk_quote bulk("1-1-1", 12.5, 10, 0.7);
+    //Quote b(bulk);
+    vector<Quote> basket;
+    basket.push_back(Quote("1-1-1", 50));
+    basket.push_back(Bulk_quote("1-1-1", 50, 10, 0.25));
+    cout << basket.back().net_price(15) << endl;
 
     return 0;
 }
