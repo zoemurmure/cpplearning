@@ -6,29 +6,29 @@
 class Disc_quote : public Quote {
 public:
     Disc_quote(): Quote() {
-        std::cout << "Disc_quote" << std::endl;
+        //std::cout << "Disc_quote" << std::endl;
     }
     ~Disc_quote() {
-        std::cout << "~Disc_quote()" << std::endl;
+        //std::cout << "~Disc_quote()" << std::endl;
     }
     Disc_quote(const Disc_quote &dq): 
         Quote(dq), quantity(dq.quantity), discount(dq.discount) {
-        std::cout << "Disc_quote(const Disc_quote&)" << std::endl;
+       // std::cout << "Disc_quote(const Disc_quote&)" << std::endl;
     }
     Disc_quote(Disc_quote &&dq): 
         Quote(std::move(dq)), quantity(std::move(dq.quantity)), discount(std::move(dq.discount)) {
-        std::cout << "Disc_quote(Disc_quote&&)" << std::endl;
+        //std::cout << "Disc_quote(Disc_quote&&)" << std::endl;
     }
     Disc_quote& operator=(const Disc_quote &rhs) {
         Quote::operator=(rhs);
-        std::cout << "operator=(const Disc_quote&)" << std::endl;
+        //std::cout << "operator=(const Disc_quote&)" << std::endl;
         quantity = rhs.quantity;
         discount = rhs.discount;
         return *this;
     }
     Disc_quote& operator=(Disc_quote &&rhs) {
         Quote::operator=(std::move(rhs));
-        std::cout << "operator=(Disc_quote&&)" << std::endl;
+        //std::cout << "operator=(Disc_quote&&)" << std::endl;
         quantity = std::move(rhs.quantity);
         discount = std::move(rhs.discount);
         return *this;

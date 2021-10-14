@@ -10,6 +10,8 @@ public:
     //         std::size_t qty, double disc) :
     //         Disc_quote(book, price, qty, disc) { }
     using Disc_quote::Disc_quote;
+    Bulk_quote* clone() const & { return new Bulk_quote(*this); }
+    Bulk_quote* clone() && { return new Bulk_quote(std::move(*this)); }
     double net_price(std::size_t) const override;
     std::ostream &debug(std::ostream &os) const override {
         Quote::debug(os) << " Bulk_quote::quantity " << quantity
