@@ -25,9 +25,15 @@ public:
     QueryResult eval(const TextQuery &t) const 
                     { return q->eval(t); }    
     std::string rep() const { return q->rep(); }
+    ~Query();
+    Query(const Query &rhs): q(rhs.q), count(rhs.count) {
+        ++*count;
+    }
+    Query &operator=(const Query&);
 private:
-    Query(std::shared_ptr<Query_base> query): q(query) { }
-    std::shared_ptr<Query_base> q;
+    Query(Query_base *&&query): q(query), count(new std::size_t(1)) { }
+    Query_base *q;
+    std::size_t *count;
 };
 
 inline
@@ -47,7 +53,8 @@ class WordQuery: public Query_base {
 };
 
 inline
-Query::Query(const std::string &s): q(new WordQuery(s)) { }
+Query::Query(const std::string &s): 
+    q(new WordQuery(s)), count(new std::size_t(1)) { }
 
 class NotQuery: public Query_base {
     friend Query operator~(const Query &);
@@ -83,15 +90,15 @@ class OrQuery: public BinaryQuery {
 };
 
 inline Query operator~(const Query &operand) {
-    return std::shared_ptr<Query_base>(new NotQuery(operand));
+    return new NotQuery(operand);
 }
 
 inline Query operator&(const Query &lhs, const Query &rhs) {
-    return std::shared_ptr<Query_base>(new AndQuery(lhs, rhs));
+    return new AndQuery(lhs, rhs);
 }
 
 inline Query operator|(const Query &lhs, const Query &rhs) {
-    return std::shared_ptr<Query_base>(new OrQuery(lhs, rhs));
+    return new OrQuery(lhs, rhs);
 }
 
 #endif
